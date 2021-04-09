@@ -17,13 +17,11 @@ export class HeaderComponent implements OnInit {
   @ViewChild(CartComponent) cart: CartComponent;
 
   navigateRide(){
-    console.log("ME ÑLAM PEKLLA");
     this.cart.resetCart();
     this.router.navigate(['/ride']);
   }
 
   navigateRideDelivery(){
-    console.log("ME ÑLAM PEKLLA");
     this.cart.resetCart();
     this.router.navigate(['/ride_delivery']);
   }

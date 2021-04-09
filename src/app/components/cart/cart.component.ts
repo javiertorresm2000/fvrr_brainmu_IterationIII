@@ -1,18 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Router } from "@angular/router";
+import { CartService } from '../../services/cart.service';
+
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  styleUrls: ['./cart.component.scss'],
+  providers: [CartService]
 })
-export class CartComponent implements OnInit {
+export class CartComponent {
   cart: Array<any> = [];
+  display = 'none';
 
-  constructor() { }
+  public cartOrder: any;
 
-  ngOnInit(): void {
-  }
-  
+  constructor(private router: Router, private _cartService:CartService) {
+    this.cartOrder = {
+      source: '',
+      destination_address: '',
+      birthday: '',
+      items: []
+    }
+   }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -55,8 +66,30 @@ export class CartComponent implements OnInit {
   }
 
   resetCart(){
-    console.log(this.cart);
     this.cart = [];
-    console.log(this.cart);
+  }
+
+  order(){
+    this.display='block';
+    this.cleanCartOrder();
+  }
+
+  closeModal(){
+    this.display='none';
+  }
+
+  buy(){
+    //this._cartService.setValues(this.cartOrder);
+    this._cartService.data = "Algooo";
+    this.resetCart();
+    this.closeModal();
+    this.router.navigate(['/map']);
+  }
+
+  cleanCartOrder(){
+    this.cartOrder.source = '';
+    this.cartOrder.destination_address = '';
+    this.cartOrder.birthday = '';
+    this.cartOrder.items = [];
   }
 }

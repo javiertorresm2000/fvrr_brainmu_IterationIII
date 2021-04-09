@@ -9,6 +9,8 @@ import { RideAndDeliverComponent } from './components/ride-and-deliver/ride-and-
 import { CartComponent } from './components/cart/cart.component';
 import { FormsModule } from '@angular/forms';
 import { routing, appRoutingProviders } from './app.routing';
+import { MapComponent } from './components/map/map.component';
+import { CartService } from './services/cart.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { routing, appRoutingProviders } from './app.routing';
     SidebarComponent,
     RideComponent,
     RideAndDeliverComponent,
-    CartComponent
+    CartComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,7 @@ import { routing, appRoutingProviders } from './app.routing';
     FormsModule,
     routing
   ],
-  providers: [appRoutingProviders],
+  providers: [appRoutingProviders, CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
