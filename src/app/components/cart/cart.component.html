@@ -1,0 +1,28 @@
+<div style="z-index: 500; width: 350px; position:absolute; min-height: 200px; top:80px; right: 10px; border: 1px solid #ccc;">
+    <div class="cart-header">
+        <h5>Shopping Cart</h5>
+    </div>
+    <div class="cart-content">
+        <div class="example-container">
+            <h6 style="color: #999;">Drop here</h6>
+            <div cdkDropList id="list-2" [cdkDropListConnectedTo]="['list-1', 'list-3']" [cdkDropListData]="cart" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <form #pedidoForm="ngForm">
+                    <div class="example-box" *ngFor="let item of cart, let i = index">
+                        <div class="item-name">
+                            {{ item.title}}
+                        </div>
+                        <div class="item-action">
+                            <input id="cart-{{i}}" type="number" value="{{item.quantity}}" class="form-control" (change)="quantityChanged($event, i)">
+                            <button class="btn btn-danger" (click)="deleteItem(i)">X</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="cart-footer">
+        <button class="btn btn-warning">Clean</button>
+        <button class="btn btn-info">Order</button>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="row" style="margin-top: 100px;">
+    <div class="col-md-2 col-sm-1">
+
+    </div>
+    <div class="col-md-8 col-sm-10 col-xs-12">
+        <div class="ride-content">
+            <div>
+                <div cdkDropListGroup>
+                    <div class="example-container">
+                        <h2>Products</h2>
+                        <div cdkDropList id="list-3" cdkDropListConnectedTo="list-2" cdkDropListSortingDisabled
+                            [cdkDropListData]="products" class="row" (cdkDropListDropped)="drop($event)">
+                            <div class="col-lg-3 col-md-4 col-sm-6 product" [array]="item" *ngFor="let item of products" cdkDrag data>
+                                <div class="card">
+                                    <img class="card-img-top" src="{{item.img}}" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{item.title}}</h5>
+                                        <p class="card-text">$ {{item.price}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="example-container">
+                        <h2>Done</h2>
+
+                        <div cdkDropList [cdkDropListData]="done" class="example-list"
+                            (cdkDropListDropped)="drop($event)">
+                            <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 col-sm-1">
+
+    </div>
+</div>

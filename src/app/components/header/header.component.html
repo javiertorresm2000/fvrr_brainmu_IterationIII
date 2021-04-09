@@ -1,0 +1,33 @@
+<div class="header">
+    <div
+        style="display: flex; align-items: center; padding: 0px 50px; width: 100%; max-width: -webkit-fill-available; height: 100%; justify-content: space-between;">
+        <div class="header-left">
+
+            <nav class="navbar navbar-expand-lg">
+                <a [routerLink]="['/']" routerLinkActive="router-link-active" >Home</a>
+                <a href="">Reviews</a>
+                <a href="">News</a>
+                <a href="">Contact</a>
+                <a href="">About</a>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Services
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" (click)="navigateRide()">Ride Service</a>
+                        <a class="dropdown-item" (click)="navigateRideDelivery()">Ride & Delivery</a>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="">Sign up</a>
+            <a>Cart</a>
+        </div>
+    </div>
+</div>
+
+<app-cart></app-cart>
