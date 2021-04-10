@@ -1,29 +1,29 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Router } from "@angular/router";
+import { NavigationExtras, Router } from "@angular/router";
 import { CartService } from '../../services/cart.service';
-
+import { MapComponent } from '../map/map.component';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
-  providers: [CartService]
 })
-export class CartComponent {
+export class CartComponent{
   cart: Array<any> = [];
   display = 'none';
+  buttons = 'flex';
 
   public cartOrder: any;
 
-  constructor(private router: Router, private _cartService:CartService) {
+
+  constructor(private router: Router, private _data: CartService) {
     this.cartOrder = {
       source: '',
       destination_address: '',
-      birthday: '',
-      items: []
+      birthday: ''
     }
-   }
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -35,58 +35,59 @@ export class CartComponent {
       let indexItem = undefined;
       let element: any = {};
 
-      for(let i = 0; i < this.cart.length; i++){
-        if(this.cart[i].id === copy.id){
+      for (let i = 0; i < this.cart.length; i++) {
+        if (this.cart[i].id === copy.id) {
           indexItem = i;
           itemAdded = true;
           break;
         }
       }
 
-      if(!itemAdded){
+      if (!itemAdded) {
         for (let attr in copy) {
           element[attr] = copy[attr];
         }
         element['quantity'] = 1;
         this.cart.push(element);
-        console.log(this.cart)
       } else {
         this.cart[indexItem].quantity = parseInt(this.cart[indexItem].quantity) + 1;
       }
     }
   }
 
-  quantityChanged(e,i){
+  quantityChanged(e, i) {
     this.cart[i].quantity = parseInt(e.target.value)
-    console.log(this.cart);
   }
 
-  deleteItem(i){
+  deleteItem(i) {
     this.cart.splice(i, 1);
   }
 
-  resetCart(){
+  resetCart() {
     this.cart = [];
   }
 
-  order(){
-    this.display='block';
+  order() {
+    this.display = 'flex';
     this.cleanCartOrder();
   }
 
-  closeModal(){
-    this.display='none';
+  closeModal() {
+    this.display = 'none';
   }
 
-  buy(){
-    //this._cartService.setValues(this.cartOrder);
-    this._cartService.data = "Algooo";
+  buy() {
+    //this._data.setValues(this.cartOrder);
+    this.cartOrder['items'] = this.cart;
     this.resetCart();
     this.closeModal();
-    this.router.navigate(['/map']);
+    this.buttons = 'none';
+
+    this._data.data = this.cartOrder;
+    this.router.navigate(['map']);
   }
 
-  cleanCartOrder(){
+  cleanCartOrder() {
     this.cartOrder.source = '';
     this.cartOrder.destination_address = '';
     this.cartOrder.birthday = '';

@@ -1,28 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from 'src/app/services/cart.service';
+import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
-  providers: [CartService]
 })
 export class MapComponent implements OnInit {
   public cartValues: any;
-  constructor(private _cartService: CartService) {
-    this.cartValues = {
-      source: '',
-      destination_address: '',
-      birthday: '',
-      items: []
-    }
 
-    // this.cartValues.source = this.cartService.data.source;
-    // this.cartValues.destination_address = this.cartService.data.destination_address;
-    // this.cartValues.birthday = this.cartService.data.birthday;
-    // this.cartValues.items = this.cartService.data.items;
+  center: {lat:24, lng: 12};
+  zoom: 15;
+  display?: google.maps.LatLngLiteral;
+
+  constructor(private route: ActivatedRoute, private _data: CartService) {
+    this.cartValues = {
+      source: this._data.data.source,
+      destination_address: this._data.data.destination_address,
+      birthday: this._data.data.birthday,
+      items: this._data.data.items
+    }
+    
   }
   ngOnInit(): void {
-    console.log(this._cartService.data);
   }
 }

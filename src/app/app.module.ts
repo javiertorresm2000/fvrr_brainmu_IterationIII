@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { routing, appRoutingProviders } from './app.routing';
 import { MapComponent } from './components/map/map.component';
 import { CartService } from './services/cart.service';
-
+import { GoogleMapsModule} from '@angular/google-maps';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,11 +24,12 @@ import { CartService } from './services/cart.service';
   ],
   imports: [
     BrowserModule,
+    GoogleMapsModule,
     DragDropModule,
     FormsModule,
     routing
   ],
-  providers: [appRoutingProviders, CartService],
+  providers: [CartService, appRoutingProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -19,11 +19,13 @@ export class HeaderComponent implements OnInit {
   navigateRide(){
     this.cart.resetCart();
     this.router.navigate(['/ride']);
+    this.cart.buttons = 'flex';
   }
 
   navigateRideDelivery(){
     this.cart.resetCart();
     this.router.navigate(['/ride_delivery']);
+    this.cart.buttons = 'flex';
   }
 }
  
