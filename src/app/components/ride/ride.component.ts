@@ -13,9 +13,9 @@ export class RideComponent implements OnInit {
   }
 
   cars = [
-    {id: '1', img: '../../../assets/img/car1.jpg', title: 'VW 2021', price: '65000'},
-    {id: '2', img: '../../../assets/img/car2.png', title: 'Chevrolet 2021', price: '65000'},
-    {id: '3', img: '../../../assets/img/car3.jpg', title: 'VW 2021', price: '65000'}
+    {id: 'car1', type: 'car', img: '/assets/img/car1.jpg', title: 'VW 2021', price: '65000'},
+    {id: 'car2', type: 'car', img: '/assets/img/car2.png', title: 'Chevrolet 2021', price: '65000'},
+    {id: 'car3', type: 'car', img: '/assets/img/car3.jpg', title: 'VW 2021', price: '65000'}
   ];
 
 

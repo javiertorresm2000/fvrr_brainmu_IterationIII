@@ -12,6 +12,10 @@ import { routing, appRoutingProviders } from './app.routing';
 import { MapComponent } from './components/map/map.component';
 import { CartService } from './services/cart.service';
 import { GoogleMapsModule} from '@angular/google-maps';
+import { RideGreenComponent } from './components/ride-green/ride-green.component';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,11 +24,13 @@ import { GoogleMapsModule} from '@angular/google-maps';
     RideComponent,
     RideAndDeliverComponent,
     CartComponent,
-    MapComponent
+    MapComponent,
+    RideGreenComponent
   ],
   imports: [
     BrowserModule,
     GoogleMapsModule,
+    GooglePlaceModule,
     DragDropModule,
     FormsModule,
     routing

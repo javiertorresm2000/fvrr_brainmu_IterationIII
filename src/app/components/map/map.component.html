@@ -4,9 +4,10 @@
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div>
-            <input type="radio" name="travel_mode" class="travel_mode" value="WALKING"> WALKING
-
-            <input type="radio" name="travel_mode" class="travel_mode" value="DRIVING" checked> DRIVING
+            <select (change)="modeChanged($event)" class="form-control" name="" id="">
+                <option value="DRIVING" selected>DRIVING</option>
+                <option value="WALKING">WALKING</option>
+            </select>
         </div>
         <div>&nbsp;</div>
         <div class="lbl-locations"><h4>Way Points</h4></div>
@@ -14,22 +15,67 @@
             <form #mapForm="ngForm">
                 <div class="form-group">
                     <label for="">Start from</label>
-                    <input type="text" id="origin" name="way_start" #way_start="ngModel" [(ngModel)]="cartValues.source" class="form-control" placeholder="Start from" value=""> 
+                    <input ngx-google-places-autocomplete [options]='options' name="way_start" #way_start="ngModel" #placesRef="ngx-places" [(ngModel)]="cartValues.source" (onAddressChange)="handleOriginChange($event)" class="form-control"/>
                 </div>
                 <div class="form-group">
                     <label for="">Destination</label>
-                    <input type="text" id="destination" name="way_end" #way_end="ngModel" [(ngModel)]="cartValues.destination_address" class="form-control" placeholder="Destination" > </div>
-                <input type="button" id="drawPath" value="Draw Path" class="btn btn-success" />
+                    <input ngx-google-places-autocomplete [options]='options' name="way_end" #way_end="ngModel" #placesRef="ngx-places" [(ngModel)]="cartValues.destination_address" (onAddressChange)="handleDestinationChange($event)" class="form-control"/>
+                </div>
+                <input type="button" id="drawPath" value="Draw Path" class="btn btn-success" (click) = "calculateRoute()"/>
                 <br>
                 <br>
             </form>
         </div>
     </div>
-
     <div class="col-md-6 col-sm-3"></div>
-    <div class="col-md-2 col-sm-3"></div>
-    <div class="col-md-8 col-sm-6">
-        <google-map width="100%" height="650px" [center]="center" [zoom] = "zoom"></google-map>
+
+    <div class="col-md-2 col-sm-1"></div>
+    <div class="col-md-6 col-sm-8">
+        <br>
+        <div id="map">
+        </div>
+        <br><br>
+        <!--<google-map width="100%" height="650px" [center]="center" [zoom] = "zoom"></google-map>-->
+    </div>
+    <div class="col-md-2 col-sm-2">
+        <button class="btn btn-info" (click) = "finishOrder()">Finish Order</button>
+    </div>
+    <div class="col-md-2 col-sm-1"></div>
+</div>
+
+
+<div class="backdrop" [ngStyle]="{'display': modalDisplay}">
+    <div class="modal detalles" tabindex="-1" role="dialog" [ngStyle]="{'display': modalDisplay}">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Your Invoice</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12"><h6>This is your purchase</h6><br></div>
+                        <div class="col-3">
+                            <img class="card-img-top" style="max-width: 250px;" src="{{cartValues.items[0].img}}" alt="">
+                        </div>
+                        <div class="col-3">
+                            <span>{{cartValues.items[0].title}}</span>
+                        </div>
+                        <div class="col-3">
+                            <span> $ {{cartValues.items[0].price}}</span>
+                        </div>
+                        <div class="col-12">
+                            <hr>
+                        </div>
+                        <div class="12">
+                            <h5>¡Payment succesfull!</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info"  (click)="acceptInvoice()">Accept</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -1,22 +1,36 @@
-<div style="z-index: 500; width: 350px; position:absolute; min-height: 200px; top:80px; right: 10px; border: 1px solid #ccc;">
+<div style="z-index: 500; width: 500px; position:absolute; min-height: 200px; top:80px; right: 10px; border: 1px solid #ccc;">
     <div class="cart-header">
         <h5>Shopping Cart</h5>
     </div>
     <div class="cart-content">
         <div class="example-container">
             <h6 style="color: #999;">Drop here</h6>
-            <div cdkDropList id="list-2" [cdkDropListConnectedTo]="['list-1', 'list-3']" [cdkDropListData]="cart" class="example-list"
+            <div cdkDropList id="list-2" [cdkDropListConnectedTo]="['list-1', 'list-3']" [cdkDropListData]="cart1" class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                <form #pedidoForm="ngForm">
-                    <div class="example-box" *ngFor="let item of cart, let i = index">
-                        <div class="item-name">
-                            {{ item.title}}
-                        </div>
-                        <div class="item-action">
-                            <input id="cart-{{i}}" type="number" value="{{item.quantity}}" class="form-control" (change)="quantityChanged($event, i)">
-                            <button class="btn btn-danger" (click)="deleteItem(i)">X</button>
+                <form style="display: flex;" #pedidoForm="ngForm">
+                    <div class="cart-left" [ngStyle] = "{'border-right': border_right}">
+                        <div class="example-box" *ngFor="let item of cart1, let i = index">
+                            <div class="item-name">
+                                {{ item.title}}
+                            </div>
+                            <div class="item-action">
+                                <input id="{{item.id}}" type="number" value="{{item.quantity}}" class="form-control" (change)="quantityChanged($event, item.id, item.cart)">
+                                <button class="btn btn-danger" (click)="deleteItem(item.id, item.cart)">X</button>
+                            </div>
                         </div>
                     </div>
+                    <div class="cart-right" [ngStyle] = "{'border-left': border_left}">
+                        <div class="example-box" *ngFor="let item of cart2, let i = index">
+                            <div class="item-name">
+                                {{ item.title}}
+                            </div>
+                            <div class="item-action">
+                                <input id="{{item.id}}" type="number" value="{{item.quantity}}" class="form-control" (change)="quantityChanged($event, item.id, item.cart)">
+                                <button class="btn btn-danger" (click)="deleteItem(item.id, item.cart)">X</button>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </form>
             </div>
         </div>
@@ -33,7 +47,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Pedido</h5>
+                    <h5 class="modal-title">Order</h5>
                     <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -43,14 +57,14 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="">Source: </label>
-                                    <input class="form-control" type="text" name="source" #source="ngModel" [(ngModel)]="cartOrder.source" required>
+                                    <label for="">Start from</label>
+                                    <input ngx-google-places-autocomplete [options]='options' name="source" #placesRef="ngx-places" (onAddressChange)="handleOriginChange($event)" class="form-control"/>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="">Destination address: </label>
-                                    <input class="form-control" type="text" name="destination_address" #destination_address="ngModel" [(ngModel)]="cartOrder.destination_address" required>
+                                    <input ngx-google-places-autocomplete [options]='options' name="destination_address" #placesRef="ngx-places" (onAddressChange)="handleDestinationChange($event)" class="form-control"/>  
                                 </div>
                             </div>
                             <div class="col-12">
@@ -58,6 +72,35 @@
                                     <label for="">Birthday</label>
                                     <input class="form-control" type="datetime-local" name="birthday" id="birthday"  #birthday="ngModel" [(ngModel)]="cartOrder.birthday" required>
                                 </div>
+                            </div>
+                            <div class="col-12" [ngStyle]="{'display': display_table}">
+                                <h5>Comparission Table</h5>
+                                <table class="table">
+                                    <thead>
+                                        <th>Option 1</th>
+                                        <th>Option 2</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{options.title1}}</td>
+                                            <td>{{options.title2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="card-img-top" style="width: 260px;" src="{{options.img1}}" alt=""> </td>
+                                            <td><img class="card-img-top" style="width: 260px;" src="{{options.img2}}" alt=""> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>$ {{options.price1}}</td>
+                                            <td>$ {{options.price2}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+                                <label for="">Select the service</label>
+                                <select class="form-control" name="" id="" (change) = "changeService($event)">
+                                    <option value="cart1">Option 1</option>
+                                    <option value="cart2">Option 2</option>
+                                </select>
                             </div>
                         </div>
                     </form>

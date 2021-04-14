@@ -14,9 +14,9 @@ export class RideAndDeliverComponent implements OnInit {
   }
 
   products = [
-    {id: '1', img: '../../../assets/img/product1.jpg', title: 'Roses', price: '25'},
-    {id: '2', img: '../../../assets/img/product2.jpg', title: 'Gerveras', price: '23'},
-    {id: '3', img: '../../../assets/img/product3.jpg', title: 'Lavanda', price: '21'}
+    {id: 'p1',type: 'product', img: '/assets/img/product1.jpg', title: 'Roses', price: '25'},
+    {id: 'p2',type: 'product', img: '/assets/img/product2.jpg', title: 'Gerveras', price: '23'},
+    {id: 'p3',type: 'product', img: '/assets/img/product3.jpg', title: 'Lavanda', price: '21'}
   ];
 
 
